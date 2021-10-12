@@ -1,44 +1,52 @@
 
+<ContentCustomSheet@BoxLayout>:
+    orientation: 'vertical'
+    size_hint_y: None
+    height: "400dp"
+
+    MDToolbar:
+        title: 'Custom bottom sheet:'
+
+    ScrollView:
+
+        MDGridLayout:
+            cols: 2
+            adaptive_height: True
+
+
+            MDSlider:
+                min: 0
+                max: 50
+
+
+            ItemForCustomBottomSheet:
+                icon: "exit-to-app"
+                text: "Exit"
+
+            MDSlider:
+                min: 0
+                max: 50
+
+
+            ItemForCustomBottomSheet:
+                icon: "exit-to-app"
+                text: "exit"
+
+            MDSlider:
+                min: 0
+                max: 50
+
+
+            ItemForCustomBottomSheet:
+                icon: "exit-to-app"
+                text: "Exit"
+
+
+
 <TimeWindow>:
-    FloatLayout:
-        Spinner:
-
-            values: ['time', 'set', 'wod']
-            size_hint: .1, .1
-            pos_hint: {'x': .9, 'y': .9}
-            on_text:
-                app.root.current = self.text
-                root.manager.transition.direction = "right"
-
-
-
-        Label:
-            on: root.time()
-            id: time_in
-            font_size: '100sp'
-
-<SettingsWindow>:
-    BoxLayout:
-        padding: 25
-        spacing: 10
-        Button:
-            text: 'r'
-            on_release:
-                root.color('r')
-
-        Button:
-            text: 'g'
-            on_release:
-                root.color('g')
-
-        Button:
-            text: 'b'
-            on_release:
-                root.color('b')
-
-        Button:
-            text: 'back'
-            on_release:
-                app.root.current = "time"
-                root.manager.transition.direction = "left"
-
+    MDRaisedButton:
+        on: root.time()
+        text: ''
+        on_release: app.secbs()
+        font_size: '100sp'
+        pos_hint: {"center_x": .5, "center_y": .5}
