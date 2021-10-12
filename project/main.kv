@@ -1,0 +1,44 @@
+
+<TimeWindow>:
+    FloatLayout:
+        Spinner:
+
+            values: ['time', 'set', 'wod']
+            size_hint: .1, .1
+            pos_hint: {'x': .9, 'y': .9}
+            on_text:
+                app.root.current = self.text
+                root.manager.transition.direction = "right"
+
+
+
+        Label:
+            on: root.time()
+            id: time_in
+            font_size: '100sp'
+
+<SettingsWindow>:
+    BoxLayout:
+        padding: 25
+        spacing: 10
+        Button:
+            text: 'r'
+            on_release:
+                root.color('r')
+
+        Button:
+            text: 'g'
+            on_release:
+                root.color('g')
+
+        Button:
+            text: 'b'
+            on_release:
+                root.color('b')
+
+        Button:
+            text: 'back'
+            on_release:
+                app.root.current = "time"
+                root.manager.transition.direction = "left"
+
