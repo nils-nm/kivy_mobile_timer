@@ -1,46 +1,41 @@
 
 
-from kivymd.app import MDApp
-from kivy.uix.floatlayout import FloatLayout
-from kivymd.uix.screen import MDScreen
-from kivymd.uix.button import MDRaisedButton
-from kivy.uix.togglebutton import ToggleButton
-from kivymd.uix.bottomsheet import MDCustomBottomSheet
-from kivy.factory import Factory
+from kivy.app import App
+
+from kivy.uix.screenmanager import Screen, ScreenManager
 
 from kivy.lang import Builder
 from kivy.clock import Clock
 import time
-kv = Builder.load_file('main.kv')
+Builder.load_file('main.kv')
 
 
-class TimeWindow(MDScreen):
+class TimeWindow(Screen):
     def time(self, *args):
-        MDRaisedButton.text = str(time.strftime('%H:%M', time.localtime()))
+        sm.get_screen('time').ids.but_clock.text = str(time.strftime('%H:%M', time.localtime()))
 
 
-# class SettingsWindow(Screen):
-#    def color(self, col):
-#        if col == 'r':
-#            sm.get_screen('time').ids.time_in.color = (1, 0, 0, 1)
-#        elif col == 'g':
-#            sm.get_screen('time').ids.time_in.color = (0, 1, 0, 1)
-#        elif col == 'b':
-#            sm.get_screen('time').ids.time_in.color = (0, 0, 1, 1)
+class SettingsWindow(Screen):
+    def color(self, r_col, g_col, b_col):
+        col_list = [r_col, g_col, b_col]
+        sm.get_screen('time').ids.but_clock.color = (col_list[0], col_list[1], col_list[2], 1)
+
+    def background(self, r_bak, g_bak, b_bak):
+        bak_list = [r_bak, g_bak, b_bak]
+        sm.get_screen('time').ids.but_clock.background_color = (bak_list[0], bak_list[1], bak_list[2], 1)
 
 
-class MyApp(MDApp):
-    custom_sheet = None
+sm = ScreenManager()
+sm.add_widget(TimeWindow(name='time'))
+sm.add_widget(SettingsWindow(name='settings'))
+
+
+class MyApp(App):
 
     def build(self):
-
         Clock.schedule_interval(TimeWindow.time, 1)
 
-        return kv
-
-    def secbs(self):
-        self.custom_sheet = MDCustomBottomSheet(screen=Factory.ContentCustomSheet())
-        self.custom_sheet.open()
+        return sm
 
 
 if __name__ == '__main__':

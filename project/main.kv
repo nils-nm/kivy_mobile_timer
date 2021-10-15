@@ -1,52 +1,155 @@
 
-<ContentCustomSheet@BoxLayout>:
-    orientation: 'vertical'
-    size_hint_y: None
-    height: "400dp"
-
-    MDToolbar:
-        title: 'Custom bottom sheet:'
-
-    ScrollView:
-
-        MDGridLayout:
-            cols: 2
-            adaptive_height: True
-
-
-            MDSlider:
-                min: 0
-                max: 50
-
-
-            ItemForCustomBottomSheet:
-                icon: "exit-to-app"
-                text: "Exit"
-
-            MDSlider:
-                min: 0
-                max: 50
-
-
-            ItemForCustomBottomSheet:
-                icon: "exit-to-app"
-                text: "exit"
-
-            MDSlider:
-                min: 0
-                max: 50
-
-
-            ItemForCustomBottomSheet:
-                icon: "exit-to-app"
-                text: "Exit"
-
-
-
 <TimeWindow>:
-    MDRaisedButton:
-        on: root.time()
-        text: ''
-        on_release: app.secbs()
-        font_size: '100sp'
-        pos_hint: {"center_x": .5, "center_y": .5}
+    Button:
+        id: but_clock
+        size_text: root.width
+        font_size: (root.width + root.height) / 5
+        background_color: 0, 0, 0, 1
+        on_release:
+            app.root.current = "settings"
+            root.manager.transition.direction = "up"
+
+
+<SettingsWindow>:
+    BoxLayout:
+        orientation: "vertical"
+        BoxLayout:
+
+            size_hint_y: .1
+            Button:
+                text: '<--'
+                size_hint: .2, 1
+                on_release:
+                    app.root.current = "time"
+                    root.manager.transition.direction = "down"
+            Label:
+                text: 'Settings'
+                font_size: '32sp'
+                size_hint: .8, 1
+
+
+        ScrollView:
+            size_hint_y: 0.9
+            do_scroll_x: False
+            do_scroll_y: True
+            scroll_type: ['content']
+
+            GridLayout:
+                spacing: 10
+                padding: 25, 0, 25, 25
+                size: (root.width, root.height)
+                size_hint_x: None
+    		    size_hint_y: None
+    		    cols: 2
+    		    height: self.minimum_height
+                Widget:
+                    size_hint: None, None
+                    size_y: 50
+
+                Label:
+                    text: 'Number color'
+                    font_size: '25sp'
+                    size_hint: None, None
+                    size_y: 50
+                    size_x: 75
+
+                Button:
+                    id: but_red_col
+                    background_color: 1, 0, 0, 1
+                    pos_hint: {'center_y': .5, 'center_x': .5}
+                    size_hint: None, None
+                    on_release: but_red_col_slid.value = 1
+                Slider:
+                    id: but_red_col_slid
+                    size_hint_y: None
+                    size_y: 50
+                    value: 1
+                    min: 0
+                    max: 1
+                    on_value: root.color(but_red_col_slid.value, but_grn_col_slid.value, but_blu_col_slid.value)
+
+
+                Button:
+                    id: but_grn_col
+                    background_color: 0, 1, 0, 1
+                    pos_hint: {'center_y': .5, 'center_x': .5}
+                    size_hint: None, None
+                    on_release: but_grn_col_slid.value = 1
+                Slider:
+                    id: but_grn_col_slid
+                    size_hint_y: None
+                    size_y: 50
+                    value: 1
+                    min: 0
+                    max: 1
+                    on_value: root.color(but_red_col_slid.value, but_grn_col_slid.value, but_blu_col_slid.value)
+
+                Button:
+                    id: but_blu_col
+                    background_color: 0, 0, 1, 1
+                    pos_hint: {'center_y': .5, 'center_x': .5}
+                    size_hint: None, None
+                    on_release: but_blu_col_slid.value = 1
+                Slider:
+                    id: but_blu_col_slid
+                    size_hint_y: None
+                    size_y: 50
+                    value: 1
+                    min: 0
+                    max: 1
+                    on_value: root.color(but_red_col_slid.value, but_grn_col_slid.value, but_blu_col_slid.value)
+
+                Widget:
+                    size_hint: None, None
+                    size_y: 50
+
+                Label:
+                    text: 'Background color'
+                    font_size: '25sp'
+                    size_hint: None, None
+                    size_y: 50
+
+                Button:
+                    id: but_red_bak
+                    background_color: 1, 0, 0, 1
+                    pos_hint: {'center_y': .5, 'center_x': .5}
+                    size_hint: None, None
+                    on_release: but_red_bak_slid.value = 1
+                Slider:
+                    id: but_red_bak_slid
+                    size_hint_y: None
+                    size_y: 50
+                    value: 0
+                    min: 0
+                    max: 1
+                    on_value: root.background(but_red_bak_slid.value, but_grn_bak_slid.value, but_blu_bak_slid.value)
+
+                Button:
+                    id: but_grn_bak
+                    background_color: 0, 1, 0, 1
+                    pos_hint: {'center_y': .5, 'center_x': .5}
+                    size_hint: None, None
+                    on_release: but_grn_bak_slid.value = 1
+                Slider:
+                    id: but_grn_bak_slid
+                    size_hint_y: None
+                    size_y: 50
+                    value: 0
+                    min: 0
+                    max: 1
+                    on_value: root.background(but_red_bak_slid.value, but_grn_bak_slid.value, but_blu_bak_slid.value)
+
+                Button:
+                    id: but_blu_bak
+                    background_color: 0, 0, 1, 1
+                    pos_hint: {'center_y': .5, 'center_x': .5}
+                    size_hint: None, None
+                    on_release: but_blu_bak_slid.value = 1
+                Slider:
+                    id: but_blu_bak_slid
+                    size_hint_y: None
+                    size_y: 50
+                    value: 0
+                    min: 0
+                    max: 1
+                    on_value: root.background(but_red_bak_slid.value, but_grn_bak_slid.value, but_blu_bak_slid.value)
